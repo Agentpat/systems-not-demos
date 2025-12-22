@@ -6,7 +6,8 @@ import { useScrollReveal } from './hooks/useScrollReveal';
 import { useHorizontalScroll } from './hooks/useHorizontalScroll';
 import { useModalParallax } from './hooks/useModalParallax';
 import { useBackToTop } from './hooks/useBackToTop';
-import { qweMarkup } from './qweMarkup';
+import { QweMarkup } from './qweMarkup';
+import ResumePage from './components/ResumePage';
 
 const SERVICE_OPS_NODES = [
   {
@@ -246,7 +247,6 @@ function NodePopover({ nodeRef, open, data, onClose }) {
     const vh = window.innerHeight;
     const spaceTop = rect.top - margin;
     const spaceBottom = vh - rect.bottom - margin;
-    const spaceLeft = rect.left - margin;
     const spaceRight = vw - rect.right - margin;
     let placement = 'top';
     if (popRect.height + offset <= spaceTop) placement = 'top';
@@ -271,7 +271,7 @@ function NodePopover({ nodeRef, open, data, onClose }) {
     top = Math.max(margin, Math.min(top, vh - popRect.height - margin));
     left = Math.max(margin, Math.min(left, vw - popRect.width - margin));
     setPos({ top, left, placement, ready: true });
-  }, [open, data, nodeRef?.current]);
+  }, [open, data, nodeRef]);
 
   useEffect(() => {
     if (!open) return;
@@ -615,7 +615,7 @@ const CASES = {
   },
 };
 
-function App() {
+function MainApp() {
   const rootRef = useRef(null);
   const popoverAnchorRef = useRef(null);
   const [popoverData, setPopoverData] = useState(null);
@@ -624,7 +624,6 @@ function App() {
   useEffect(() => {
     const root = rootRef.current;
     if (!root || nodes) return;
-    root.innerHTML = qweMarkup;
 
     const select = (sel) => root.querySelector(sel);
     const selectAll = (sel) => Array.from(root.querySelectorAll(sel));
@@ -1016,10 +1015,8 @@ function App() {
               }
               const hoverNone =
                 typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: none)').matches;
-              let activeId = null;
               let pinnedId = null;
               const setActive = (id) => {
-                activeId = id;
                 nodesEls.forEach((node) => {
                   const isActive = node.getAttribute('data-node-id') === id;
                   node.setAttribute('data-active', isActive ? 'true' : 'false');
@@ -1243,7 +1240,7 @@ function App() {
 
   return (
     <>
-      <div ref={rootRef} />
+      <QweMarkup ref={rootRef} />
       <NodePopover
         open={!!popoverData}
         nodeRef={popoverAnchorRef}
@@ -1255,6 +1252,11 @@ function App() {
       />
     </>
   );
+}
+
+function App() {
+  const isResumeRoute = typeof window !== 'undefined' && window.location.pathname.startsWith('/resume');
+  return isResumeRoute ? <ResumePage /> : <MainApp />;
 }
 
 export default App;

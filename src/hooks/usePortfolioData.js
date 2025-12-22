@@ -119,7 +119,7 @@ const fallbackProfile = {
     linkedin: 'https://www.linkedin.com/',
     twitter: 'https://x.com/olaide__akosile',
     calendly: 'https://calendly.com/',
-    resumeUrl: '/resume.pdf',
+    resumeUrl: '/resume',
   },
 };
 

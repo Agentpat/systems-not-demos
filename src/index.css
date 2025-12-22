@@ -201,7 +201,6 @@ body {
 }
 
 .section {
-  padding: 96px 0;
   position: relative;
 }
 
@@ -370,43 +369,106 @@ nav a.active {
   right: 0;
   top: 0;
   height: 100%;
-  width: min(420px, 92vw);
-  background: linear-gradient(180deg, rgba(18, 18, 27, .96), rgba(10, 10, 15, .96));
-  border-left: 1px solid rgba(255, 255, 255, .10);
-  padding: 18px;
+  width: min(380px, 90vw);
+  background: linear-gradient(180deg, rgba(18, 18, 27, .98), rgba(10, 10, 15, .98));
+  border-left: 1px solid rgba(255, 255, 255, .12);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .drawerHead {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px
+  gap: 16px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .02);
+}
+
+.drawerHead .brand {
+  min-width: auto;
+  flex: 1;
+}
+
+.drawerHead .brand strong {
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.drawerHead .brand span {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.drawerHead .btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .10);
+  font-size: 20px;
+  line-height: 1;
+  color: rgba(233, 233, 241, .9);
+  transition: all 0.2s var(--ease);
+  flex-shrink: 0;
+}
+
+.drawerHead .btn:hover {
+  background: rgba(255, 255, 255, .10);
+  border-color: rgba(255, 255, 255, .16);
+  transform: scale(1.05);
 }
 
 .drawerPanel ul {
   display: grid;
-  gap: 10px;
+  gap: 6px;
   list-style: none;
-  padding: 14px 0 0;
-  margin: 0
+  padding: 20px;
+  margin: 0;
+  flex: 1;
+  overflow-y: auto;
 }
 
-.drawerPanel a {
+.drawerPanel ul a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, .06);
-  border: 1px solid rgba(255, 255, 255, .10);
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .08);
   text-decoration: none;
   color: rgba(233, 233, 241, .9);
-  font-weight: 800;
+  font-weight: 700;
+  font-size: 15px;
+  transition: all 0.2s var(--ease);
 }
 
-.drawerPanel a small {
-  color: rgba(233, 233, 241, .55);
-  font: 700 11px/1 var(--mono)
+.drawerPanel ul a:hover {
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(255, 255, 255, .14);
+  transform: translateX(-2px);
+}
+
+.drawerPanel ul a small {
+  color: rgba(233, 233, 241, .5);
+  font: 600 10px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.drawerPanel>.divider {
+  margin: 0 20px;
+}
+
+.drawerPanel>.btn {
+  margin: 0 20px 20px;
 }
 
 /* ---------- Hero ---------- */
