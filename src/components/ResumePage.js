@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import './ResumePage.css';
 
 const coreSkills = [
@@ -116,13 +118,68 @@ const skillCategories = [
 ];
 
 export function ResumePage() {
+  const resumeRef = useRef(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
   useEffect(() => {
     document.title = 'Olaide Akosile Joseph - Resume';
   }, []);
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleDownloadPdf = async () => {
+    if (!resumeRef.current || isGenerating) return;
+
+    setIsGenerating(true);
+    try {
+      const canvas = await html2canvas(resumeRef.current, {
+        scale: 2,
+        useCORS: true,
+        windowWidth: resumeRef.current.scrollWidth,
+        backgroundColor: '#0b0b10', // ensure opaque background so light text stays readable in the PDF
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save('Olaide-Akosile-Resume.pdf');
+    } catch (error) {
+      console.error('PDF generation failed', error);
+      alert('Unable to create the PDF. Please try again or use the Print option to save as PDF.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
     <div className="resume-page">
-      <div className="resume-container">
+      <div className="resume-actions no-print">
+        <button className="resume-action-btn primary" onClick={handleDownloadPdf} disabled={isGenerating}>
+          {isGenerating ? 'Preparing PDF…' : 'Download PDF'}
+        </button>
+        <button className="resume-action-btn" onClick={handlePrint}>Print / Save as PDF</button>
+      </div>
+
+      <div className="resume-container" ref={resumeRef}>
         <header className="resume-header">
           <h1>OLAIDE AKOSILE JOSEPH</h1>
           <div className="title">Systems Engineer | Backend &amp; Platform Automation</div>

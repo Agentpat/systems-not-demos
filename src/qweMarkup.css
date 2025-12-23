@@ -791,6 +791,24 @@
     .metric .label{color:rgba(233,233,241,.72); font-weight:800; letter-spacing:.2px;}
     .metric .note{margin-top: 8px; color:rgba(233,233,241,.58); line-height:1.5; font-size:13px}
 
+    /* ---------- Contact layout adjustments ---------- */
+    #contact.section{
+      padding: 64px 0;
+    }
+
+    #contact.section > .container{
+      width: 100%;
+      max-width: var(--max);
+      padding: 0 16px;
+    }
+
+    .ctaWrap,
+    .ctaLeft,
+    .ctaRight{
+      width: 100%;
+      min-width: 0;
+    }
+
     /* ---------- CTA ---------- */
     .ctaWrap{
       border-radius: 28px;
@@ -1067,4 +1085,55 @@
       .articleGrid{grid-template-columns: 1fr}
       .metrics{grid-template-columns: 1fr}
       .headline{letter-spacing:-.04em}
+    }
+
+    /* ---------- Contact: small screens ---------- */
+    @media (max-width: 560px){
+      #contact.section{
+        padding: 52px 0;
+      }
+
+      #contact.section > .container{
+        padding: 0 14px;
+      }
+
+      .ctaWrap{
+        border-radius: 20px;
+        border-width: 1px;
+        grid-template-columns: 1fr;
+      }
+
+      .ctaLeft,
+      .ctaRight{
+        padding: 20px;
+      }
+
+      .ctaLeft h3{
+        font-size: clamp(26px, 8vw, 32px);
+        line-height: 1.1;
+      }
+
+      .contactGrid{
+        grid-template-columns: 1fr;
+      }
+
+      .contactItem{
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 400px){
+      #contact.section{
+        padding: 46px 0;
+      }
+
+      #contact.section > .container{
+        padding: 0 12px;
+      }
+
+      .ctaLeft,
+      .ctaRight{
+        padding: 18px 16px;
+      }
     }
