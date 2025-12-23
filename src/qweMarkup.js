@@ -2,6 +2,8 @@
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import './qweMarkup.css';
 
+const logoImage = `${process.env.PUBLIC_URL}/logo.jpg`;
+
 const heroPills = [
   '4+ years building',
   'MERN - MongoDB - Node',
@@ -678,7 +680,7 @@ const QweMarkup = forwardRef(function QweMarkup(_props, forwardedRef) {
         <div className="drawerPanel" role="dialog" aria-modal="true" aria-label="Navigation">
           <div className="drawerHead">
             <a className="brand" href="#top" onClick={() => setDrawerOpen(false)}>
-              <div className="logo" aria-hidden="true" />
+              <div className="logo" aria-hidden="true" style={{ backgroundImage: `url(${logoImage})` }} />
               <div>
                 <strong>Olaide - Systems</strong>
                 <span>automation - ops - platforms</span>
@@ -710,7 +712,7 @@ const QweMarkup = forwardRef(function QweMarkup(_props, forwardedRef) {
       <header>
         <div className="container nav">
           <a className="brand" href="#top">
-            <div className="logo" aria-hidden="true" />
+            <div className="logo" aria-hidden="true" style={{ backgroundImage: `url(${logoImage})` }} />
             <div>
               <strong>Olaide - Systems</strong>
               <span>automation - ops - platforms</span>
