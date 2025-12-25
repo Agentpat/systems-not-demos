@@ -991,49 +991,7 @@ const QweMarkup = forwardRef(function QweMarkup(_props, forwardedRef) {
               </div>
             </aside>
 
-            <section className="csRight" id="csRight" ref={csRightRef}>
-              {modalSections.map((sec) => (
-                <div key={sec.h} className="csSection">
-                  <h4>{sec.h}</h4>
-                  {sec.p ? <p>{sec.p}</p> : null}
-                  {sec.list ? (
-                    <ul className="csList">
-                      {sec.list.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                  {sec.arch ? (
-                    <>
-                      <div className="csArch csRationaleDesktop" aria-hidden="true">
-                        <div className="wire" />
-                        <div className="node" style={{ left: '12%', top: '40%' }} />
-                        <div className="node" style={{ left: '34%', top: '26%' }} />
-                        <div className="node" style={{ left: '56%', top: '58%' }} />
-                        <div className="node" style={{ left: '78%', top: '34%' }} />
-                        <div className="node" style={{ left: '86%', top: '60%' }} />
-                      </div>
-                      <div className="csRationaleMobile">
-                        {modalSections.find((s) => s.h.toLowerCase().includes('problem'))?.p ? (
-                          <div className="csRationaleItem">
-                            <div className="csRationaleLabel">Problem context</div>
-                            <div className="csRationaleItemTitle">Why it exists</div>
-                            <p>{modalSections.find((s) => s.h.toLowerCase().includes('problem'))?.p}</p>
-                          </div>
-                        ) : null}
-                        {modalSections.find((s) => s.h.toLowerCase().includes('system'))?.p ? (
-                          <div className="csRationaleItem">
-                            <div className="csRationaleLabel">System overview</div>
-                            <div className="csRationaleItemTitle">How it works</div>
-                            <p>{modalSections.find((s) => s.h.toLowerCase().includes('system'))?.p}</p>
-                          </div>
-                        ) : null}
-                      </div>
-                    </>
-                  ) : null}
-                </div>
-              ))}
-            </section>
+            <section className="csRight" id="csRight" ref={csRightRef} />
           </div>
         </div>
       </div>
