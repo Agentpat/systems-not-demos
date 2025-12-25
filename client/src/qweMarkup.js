@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import './qweMarkup.css';
+import { CASES } from './caseData';
 
 const logoImage = `${process.env.PUBLIC_URL}/logo.jpg`;
 
@@ -25,320 +26,9 @@ const features = [
   { icon: 'PLT', pill: 'Platforms', title: 'Internal Dashboards', body: 'Multi-role access, analytics, operational controls, and audit visibility.' },
   { icon: 'AI', pill: 'AI', title: 'Assistive Ops Layers', body: 'Summaries, anomaly hints, triage assistance, and reporting automation.' },
 ];
-const cases = {
-  serviceops: {
-    pill: 'Service Ops',
-    title: 'Service Ops Automation Platform',
-    summary: 'Shipped: service lifecycle orchestration with intake -> assignment -> execution -> QA -> completion, SLA-aware escalations, and auditability.',
-    meta: ['Shipped', 'Production', 'Workflow Engine'],
-    bullets: [
-      'Job lifecycle + approvals + role routing',
-      'SLAs, escalations, and audit trail',
-      'RBAC with assignment + queueing',
-      'Solo build, CTO-level ownership',
-    ],
-    modal: {
-      title: 'Service Ops Automation Platform',
-      lead: 'This system exists because manual operations failed at scale. Service lifecycle orchestration with workflow, SLAs, escalations, RBAC, and auditability.',
-      tags: ['Service Ops', 'Workflow Engine', 'SLA / Escalations', 'RBAC', 'Audit Trail', 'Production'],
-      sections: [
-        { h: 'Problem Context', p: 'Manual job coordination breaks when volume increases: inconsistent handoffs, unclear ownership, SLA misses, and no audit trail.' },
-        { h: 'System Overview', p: 'The platform models the service lifecycle end-to-end: intake -> assignment -> execution -> QA -> completion, with approvals, escalations, role-based controls, and audit history.' },
-        {
-          h: 'Key Design Decisions',
-          list: [
-            'Chose workflow-driven orchestration over ad-hoc task handling to enforce consistency and traceability',
-            'Modeled job lifecycles explicitly to support SLAs, escalations, and audit trails',
-            'Avoided implicit automation; all automated transitions are verifiable and reversible',
-            'Designed RBAC early to prevent privilege creep as operations scaled',
-          ],
-        },
-        {
-          h: 'What Was Intentionally Not Automated',
-          list: [
-            'Customer billing adjustments require explicit human approval',
-            'Exception handling paths that could impact contractual obligations',
-            'Final resolution sign-off for edge-case service failures',
-          ],
-        },
-        {
-          h: 'Operational Readiness',
-          list: [
-            'Job state transitions are validated and rejected if they violate lifecycle rules',
-            'Errors surface with contextual job state to support fast diagnosis',
-            'All actions are logged for traceability across admin, vendor, and customer flows',
-            'Access is enforced via role-based permissions to prevent cross-job impact',
-          ],
-        },
-        { h: 'Observed Outcome', p: 'Work becomes traceable and repeatable: every decision is logged, escalation paths are explicit, and ops is driven by workflow state rather than people memory.' },
-        { h: 'Next Iteration', p: 'Expanding automation triggers and integrating a voice-based front door for customer intake and triage.' },
-        { h: 'Design Rationale', arch: true },
-      ],
-    },
-  },
-  schoolos: {
-    pill: 'School OS',
-    title: 'AI-Powered School Management System',
-    summary: 'Unified school OS with role-based dashboards, academic/behavior tracking, and explainable AI insights so leaders act early instead of reacting late.',
-    meta: ['EdTech', 'AI Insights', 'MERN'],
-    bullets: [
-      'Role-based dashboards for admin, teachers, parents, students',
-      'Attendance, performance, and behavior in one system',
-      'Explainable AI flags anomalies with suggested actions',
-      'Modular MERN stack, privacy and compliance ready',
-    ],
-    modal: {
-      title: 'AI-Powered School Management System (School OS)',
-      lead: 'A modern, intelligent school operating system that replaces fragmented tools with a unified, explainable AI layer for day-to-day operations.',
-      tags: ['EdTech', 'AI Insights', 'MERN', 'Role-Based Access'],
-      sections: [
-        {
-          h: 'Problem Context',
-          p: 'Schools juggle fragmented tools for attendance, grades, finance, and communication. Leaders react late, teachers drown in admin work, data lacks meaning, and parents have little transparency.',
-        },
-        {
-          h: 'System Overview',
-          p: 'School OS unifies academic and operational data into a single, role-based system. Admins get real-time school health, teachers log attendance and assessments fast, parents see trusted progress updates, and an explainable AI layer surfaces anomalies with suggested actions.',
-        },
-        {
-          h: 'Key Design Decisions',
-          list: [
-            'Single source-of-truth data model instead of disconnected modules or LMS customizations',
-            'AI acts as an assistant with explainable insights; no opaque decisions are applied blindly',
-            'Admin visibility shipped first, then expanded flows for teachers and parents',
-            'Mobile-first access and modular rollout so schools can adopt incrementally',
-          ],
-        },
-        {
-          h: 'What Was Intentionally Not Automated',
-          list: [
-            'Grade changes, disciplinary actions, and compliance-sensitive updates without human approval',
-            'AI auto-applying recommendations without confidence and rationale shown to staff',
-            'Cross-student data merges or bulk edits without explicit review and audit',
-          ],
-        },
-        {
-          h: 'Operational Readiness',
-          list: [
-            'RBAC across admin, teacher, parent, and student roles with audit logging',
-            'Validation on attendance, performance, and behavior inputs with override trails',
-            'AI insight cards show confidence and rationale to maintain trust',
-            'Deployable MERN stack with privacy guardrails and future compliance hooks',
-          ],
-        },
-        {
-          h: 'Observed Outcome',
-          p: 'In build: core architecture, UI direction, and key modules are in place. Expected impact: reduced admin load, earlier risk detection, and clearer communication among administrators, teachers, and parents.',
-        },
-        {
-          h: 'Next Iteration',
-          p: 'Pilot with a school (starting in South Africa), add compliance and data governance, ship a mobile-first parent app, and train AI models on anonymized real data.',
-        },
-        { h: 'Design Rationale', arch: true },
-      ],
-    },
-  },
-  umare: {
-    pill: 'UMARE',
-    title: 'Monitoring & Auto-Resolution Engine',
-    summary: 'Normalizes signals into incidents, applies triage rules, and runs verified remediation with rollback and escalation for consistent, auditable recovery.',
-    meta: ['Incidents', 'Playbooks', 'SLA'],
-    bullets: [
-      'Signal ingestion + normalization',
-      'Auto-triage + confidence scoring',
-      'Verification + rollback paths',
-      'Operator cockpit + audit timeline',
-    ],
-    modal: {
-      title: 'UMARE - Monitoring & Auto-Resolution Engine',
-      lead: 'This system exists because manual operations failed at scale. UMARE normalizes signals into incidents, applies triage rules, and executes verified remediation with auditability, rollback, and escalation paths.',
-      tags: ['Incidents', 'Playbooks', 'Verification', 'Auditability'],
-      sections: [
-        { h: 'Problem Context', p: "Manual incident handling doesn't scale. Response quality varies by operator, resolution depends on tribal knowledge, and teams grow headcount instead of fixing root causes." },
-        { h: 'System Overview', p: 'UMARE normalizes signals into incidents, applies triage rules, and executes verified remediation playbooks with auditability, rollback, and escalation paths.' },
-        {
-          h: 'Key Design Decisions',
-          list: [
-            'Chose event-driven workflows to support retries, observability, and auditability',
-            'Separated signal ingestion from resolution logic to reduce blast radius',
-            'Avoided real-time automation for low-confidence incidents; escalated instead',
-            'Required verification and rollback paths for every executable playbook',
-          ],
-        },
-        {
-          h: 'What Was Intentionally Not Automated',
-          list: [
-            'Low-confidence incidents escalate instead of triggering auto-remediation',
-            'Actions without a clear verification step or rollback path',
-            'Cross-system changes that exceed defined safety boundaries',
-          ],
-        },
-        {
-          h: 'Operational Readiness',
-          list: [
-            'Incident timelines capture signals, decisions, and actions as a single record',
-            'Automated actions are reversible and monitored after execution',
-            'Failures degrade to human escalation instead of silent retries',
-            'System behavior remains observable without inspecting raw logs',
-          ],
-        },
-        { h: 'Observed Outcome', p: 'Operational response becomes consistent, traceable, and largely self-serving, with humans supervising only when confidence drops.' },
-        { h: 'Next Iteration', p: 'Improving confidence scoring and expanding the playbook library to safely increase automation coverage.' },
-        { h: 'Design Rationale', arch: true },
-      ],
-    },
-  },
-  hyperflow: {
-    pill: 'HyperFlow',
-    title: 'Workflow Execution Engine',
-    summary: 'Compiles modeled workflows into executable state machines with routing, SLAs, timers, and escalation logic.',
-    meta: ['Rules', 'Queues', 'RBAC'],
-    bullets: [
-      'Workflow -> state machine compiler',
-      'Role routing + assignment rules',
-      'Timers, SLAs, escalation branches',
-      'Auditable history + debugging',
-    ],
-    modal: {
-      title: 'HyperFlow - Workflow Execution Engine',
-      lead: 'This system exists because manual operations failed at scale. HyperFlow models workflows as executable state machines with role routing, SLAs, timers, and escalation logic.',
-      tags: ['State Machine', 'Routing', 'SLA', 'Audit Trails'],
-      sections: [
-        { h: 'Problem Context', p: "Operational workflows live in people's heads and documents, making exceptions expensive and scaling dependent on coordination roles." },
-        { h: 'System Overview', p: 'HyperFlow models workflows as executable state machines with role routing, SLAs, timers, and escalation logic.' },
-        {
-          h: 'Key Design Decisions',
-          list: [
-            'Represented workflows as executable state machines instead of static diagrams',
-            'Modeled time explicitly (timers, SLAs) rather than relying on human reminders',
-            'Separated workflow definition from execution to allow safe iteration',
-            'Prioritized auditability over speed to support compliance and debugging',
-          ],
-        },
-        {
-          h: 'What Was Intentionally Not Automated',
-          list: [
-            'Workflow transitions that bypass required approvals',
-            'SLA overrides without explicit operator intent',
-            'Structural workflow changes without versioned validation',
-          ],
-        },
-        {
-          h: 'Operational Readiness',
-          list: [
-            'Workflow execution is deterministic and versioned for safe iteration',
-            'State transitions are persisted to allow recovery and replay',
-            'Failures are isolated to individual workflows',
-            'Operators can intervene without corrupting system state',
-          ],
-        },
-        { h: 'Observed Outcome', p: 'Teams operate with fewer handoffs, predictable execution, and clear accountability across workflows.' },
-        { h: 'Next Iteration', p: 'Hardening edge cases and expanding visual modeling into reusable workflow templates.' },
-        { h: 'Design Rationale', arch: true },
-      ],
-    },
-  },
-  cortex: {
-    pill: 'Cortex',
-    title: 'Ops Intelligence Dashboard',
-    summary: 'Defines a centralized truth layer and decision views around bottlenecks, pressure, and risk.',
-    meta: ['Analytics', 'Alerts', 'Trends'],
-    bullets: [
-      'Truth layer for operational data',
-      'Bottleneck + queue pressure views',
-      'Actionable alerts (not noise)',
-      'Role-based dashboards',
-    ],
-    modal: {
-      title: 'Cortex - Ops Intelligence Dashboard',
-      lead: 'This system exists because manual operations failed at scale. Cortex defines a centralized truth layer and renders decision-oriented views focused on bottlenecks, pressure points, and risk.',
-      tags: ['Truth Layer', 'Analytics', 'Alerts', 'Ownership'],
-      sections: [
-        { h: 'Problem Context', p: 'Dashboards often lie because operational data lacks a consistent truth model and ownership.' },
-        { h: 'System Overview', p: 'Cortex defines a centralized truth layer and renders decision-oriented views focused on bottlenecks, pressure points, and risk.' },
-        {
-          h: 'Key Design Decisions',
-          list: [
-            'Introduced a centralized truth layer before visualization to prevent metric drift',
-            'Designed dashboards around decisions, not raw data availability',
-            'Avoided real-time alerts without clear action paths to reduce noise',
-            'Enforced ownership mapping between metrics and responsible roles',
-          ],
-        },
-        {
-          h: 'What Was Intentionally Not Automated',
-          list: [
-            'Automated decisions based solely on incomplete or lagging data',
-            'Alerting without a defined owner or action path',
-            'Metric aggregation that obscures root cause analysis',
-          ],
-        },
-        {
-          h: 'Operational Readiness',
-          list: [
-            'Metrics are computed from normalized sources to avoid drift',
-            'Data gaps and freshness are explicitly surfaced',
-            'Dashboards expose ownership and decision context',
-            'Alerts map to actions, not just thresholds',
-          ],
-        },
-        { h: 'Observed Outcome', p: 'Leaders detect operational issues earlier and make decisions based on reality, not vanity metrics.' },
-        { h: 'Next Iteration', p: 'Refining signal definitions and tightening feedback loops between metrics and actions.' },
-        { h: 'Design Rationale', arch: true },
-      ],
-    },
-  },
-  gbp: {
-    pill: 'GBP Assistant',
-    title: 'Local SEO Automation Platform',
-    summary: 'Structures content workflows, approvals, scheduling, and performance visibility across accounts.',
-    meta: ['Automation', 'Approvals', 'Reporting'],
-    bullets: [
-      'Client / Agency / Admin roles',
-      'Content workflow + approvals',
-      'Scheduling + publishing',
-      'Insights + reporting',
-    ],
-    modal: {
-      title: 'GBP Assistant - Local SEO Automation Platform',
-      lead: 'This system exists because manual operations failed at scale. GBP Assistant structures content workflows, approvals, scheduling, and performance visibility in a multi-tenant platform.',
-      tags: ['Automation', 'Approvals', 'Scheduling', 'Reporting'],
-      sections: [
-        { h: 'Problem Context', p: 'Local SEO operations break down at scale due to fragmented workflows, approvals, and reporting across accounts.' },
-        { h: 'System Overview', p: 'GBP Assistant structures content workflows, approvals, scheduling, and performance visibility in a multi-tenant platform.' },
-        {
-          h: 'Key Design Decisions',
-          list: [
-            'Designed multi-tenancy and role separation from the start to support agencies',
-            'Structured content workflows with approvals to reduce posting errors at scale',
-            'Avoided direct publishing without review to protect brand consistency',
-            'Treated reporting as an operational feedback loop, not a vanity feature',
-          ],
-        },
-        {
-          h: 'What Was Intentionally Not Automated',
-          list: [
-            'Content publishing without human review',
-            'Brand-sensitive changes across multiple client accounts',
-            'Automated responses to negative reviews without approval',
-          ],
-        },
-        {
-          h: 'Operational Readiness',
-          list: [
-            'Content actions are logged with author, approver, and timestamp',
-            'Publishing failures surface clearly without silent drops',
-            'Role boundaries prevent cross-account effects',
-            'Reporting reflects actual outcomes, not queued intent',
-          ],
-        },
-        { h: 'Observed Outcome', p: 'Agencies and clients operate consistently across locations with reduced manual oversight.' },
-        { h: 'Next Iteration', p: 'Automating performance insights and tightening feedback between content actions and outcomes.' },
-        { h: 'Design Rationale', arch: true },
-      ],
-    },
-  },
-};
+
+const cases = CASES;
+
 const statusBlocks = [
   { title: 'Workflow modeling', note: 'design', pill: 'active' },
   { title: 'Automation safety', note: 'prototype', pill: 'build' },
@@ -539,6 +229,10 @@ const QweMarkup = forwardRef(function QweMarkup(_props, forwardedRef) {
   const toTopRef = useRef(null);
   const mergedRef = mergeRefs(forwardedRef, rootRef);
   const selectedCase = activeCase ? cases[activeCase] : null;
+  const modalSections = useMemo(
+    () => (selectedCase?.modal?.sections || []).filter((sec) => (sec.h || '').toLowerCase() !== 'project basics'),
+    [selectedCase],
+  );
   const year = useMemo(() => new Date().getFullYear(), []);
   useEffect(() => {
     if (activeCase) {
@@ -1289,13 +983,7 @@ const QweMarkup = forwardRef(function QweMarkup(_props, forwardedRef) {
                   {selectedCase?.modal.lead || ''}
                 </p>
 
-                <div className="csMetaRow" id="csMeta">
-                  {selectedCase?.modal.tags.map((tag) => (
-                    <span key={tag} className="pill">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <div className="csMetaRow" id="csMeta" aria-label="Case tags" />
                 <div className="divider" />
                 <div className="muted2" style={{ font: '800 11px/1.6 var(--mono)', letterSpacing: '.14em', textTransform: 'uppercase' }}>
                   Right panel scrolls.
@@ -1304,7 +992,7 @@ const QweMarkup = forwardRef(function QweMarkup(_props, forwardedRef) {
             </aside>
 
             <section className="csRight" id="csRight" ref={csRightRef}>
-              {selectedCase?.modal.sections.map((sec) => (
+              {modalSections.map((sec) => (
                 <div key={sec.h} className="csSection">
                   <h4>{sec.h}</h4>
                   {sec.p ? <p>{sec.p}</p> : null}
@@ -1326,18 +1014,18 @@ const QweMarkup = forwardRef(function QweMarkup(_props, forwardedRef) {
                         <div className="node" style={{ left: '86%', top: '60%' }} />
                       </div>
                       <div className="csRationaleMobile">
-                        {selectedCase?.modal.sections.find((s) => s.h.toLowerCase().includes('problem'))?.p ? (
+                        {modalSections.find((s) => s.h.toLowerCase().includes('problem'))?.p ? (
                           <div className="csRationaleItem">
                             <div className="csRationaleLabel">Problem context</div>
                             <div className="csRationaleItemTitle">Why it exists</div>
-                            <p>{selectedCase.modal.sections.find((s) => s.h.toLowerCase().includes('problem'))?.p}</p>
+                            <p>{modalSections.find((s) => s.h.toLowerCase().includes('problem'))?.p}</p>
                           </div>
                         ) : null}
-                        {selectedCase?.modal.sections.find((s) => s.h.toLowerCase().includes('system'))?.p ? (
+                        {modalSections.find((s) => s.h.toLowerCase().includes('system'))?.p ? (
                           <div className="csRationaleItem">
                             <div className="csRationaleLabel">System overview</div>
                             <div className="csRationaleItemTitle">How it works</div>
-                            <p>{selectedCase.modal.sections.find((s) => s.h.toLowerCase().includes('system'))?.p}</p>
+                            <p>{modalSections.find((s) => s.h.toLowerCase().includes('system'))?.p}</p>
                           </div>
                         ) : null}
                       </div>

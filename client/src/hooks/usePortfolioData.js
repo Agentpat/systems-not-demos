@@ -219,7 +219,7 @@ const fallbackCaseStudies = [
     title: 'AI-Powered School Management System (School OS)',
     badge: 'EdTech',
     overview:
-      'Unified school operating system with role-based dashboards, academic/behavior tracking, and explainable AI insights so administrators act early instead of reacting late.',
+      'Unified school operating system with role-based dashboards, academic/behavior tracking, and explainable AI insights so leaders act early instead of reacting late.',
     responsibilities: ['Product architecture and UX/UI', 'Full-stack MERN implementation', 'AI insights and decision support design'],
     architectureNotes: [
       'Single source-of-truth data model across attendance, performance, behavior, and engagement',
@@ -230,7 +230,7 @@ const fallbackCaseStudies = [
     features: [
       'Central dashboard with real-time school health',
       'Attendance, performance, and behavior tracking',
-      'AI insights cards with rationale and suggested actions',
+      'AI insight cards with rationale and suggested actions',
       'Mobile-aware access for teachers and parents',
     ],
     results: [
